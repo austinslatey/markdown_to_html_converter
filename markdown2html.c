@@ -14,7 +14,7 @@ void convertHeading(const char *line, char *output)
 	{
 		level++;
 	}
-	snprintf(output, MAX_LINE_LENGTH, "<h%d>%s</h%d>\n", level, line, level + 1, level);
+	snprintf(output, MAX_LINE_LENGTH, "<h%d>%s</h%d>\n", level, line + level + 1, level);
 }
 
 // Function to convert a Markdown list item to HTML
@@ -48,7 +48,7 @@ void convertMarkdownToHTML(const char *inputFilename, const char *outputFilename
 	FILE *outputFile = fopen(outputFilename, "w");
 	if (!outputFile)
 	{
-		printf("Error: Unable to open input file '%s'\n", outputFilename);
+		printf("Error: Unable to open output file '%s'\n", outputFilename);
 		return;
 	}
 
@@ -71,7 +71,7 @@ void convertMarkdownToHTML(const char *inputFilename, const char *outputFilename
 		}
 		else
 		{
-			strncpy(outputFile, "%s", output);
+			fprintf(outputFile, "%s", output);
 		}
 
 		fprintf(outputFile, "%s", output);
@@ -84,7 +84,7 @@ void convertMarkdownToHTML(const char *inputFilename, const char *outputFilename
 
 int main(int argc, char *argv[])
 {
-	if (argc = !3)
+	if (argc != 3)
 	{
 		printf("Usage: %s input_file output_file\n", argv[0]);
 		return 1;
